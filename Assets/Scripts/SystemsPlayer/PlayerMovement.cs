@@ -10,13 +10,14 @@ namespace Player
         [SerializeField] private float jumpForce = 5f;
         [SerializeField] private LayerMask Ground;
         [SerializeField] private byte jumpsMust = 2;
-        private bool isGrounded;
-        private bool isJumping = false;
-        private byte jumpsRemaining;
-        Rigidbody2D rigidbody2D;
-        Collider2D Collider;
-        Animator animator;
-        private bool lookRight = true;
+        [SerializeField] bool isGrounded;
+        [SerializeField] bool isJumping = false;
+        [SerializeField] byte jumpsRemaining;
+        [SerializeField] Rigidbody2D rigidbody2D;
+        [SerializeField] Collider2D Collider;
+        [SerializeField] Animator animator;
+        [SerializeField] PlayerChakra playerChakra;
+        [SerializeField] bool lookRight = true;
         private void Start()
         {
             Collider = GetComponent<Collider2D>();
@@ -84,24 +85,32 @@ namespace Player
             jumpsRemaining = jumpsMust;
             isJumping = false;
         }
-        private void OnCollisionStay2D(Collision2D other)
-        {
-            if ((Ground.value & (1 << other.collider.gameObject.layer)) > 0)
-            {
-                JumpRestart();
-            }
-        }
         private void CheckforGrounded()
         {
-            if(Collider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            float distancia = 0.5f; // Distancia del raycast
+            LayerMask layerMask = LayerMask.GetMask("Ground"); // Capa del suelo
+            LayerMask layerMask1 = LayerMask.GetMask("Water");
+            RaycastHit2D hit = Physics2D.Raycast(
+                transform.position + new Vector3(0, -Collider.bounds.size.y / 2), 
+                Vector2.down, 
+                distancia, 
+                layerMask);
+            
+            if (hit.collider != null)
             {
+                Debug.Log("Collider detectado: " + hit.collider.name);
                 isGrounded = true;
                 animator.SetBool("isGrounded", true);
                 JumpRestart();
                 jumpsRemaining = jumpsMust;
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Water"))
+                {
+                    playerChakra.ChakraDrain(); // Llama a la función ChakraDrain
+                }
             }
             else
             {
+                Debug.Log("No se detectó collider");
                 isGrounded = false;
                 animator.SetBool("isGrounded", false);
             }

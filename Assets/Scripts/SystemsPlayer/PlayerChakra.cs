@@ -5,14 +5,24 @@ using Player;
 
 public class PlayerChakra : MonoBehaviour
 {
-    private Attributes _chakra = new Attributes("_chakra", 10);
-
+    [SerializeField] Attributes _chakra = new Attributes("_chakra", 10);
+    [SerializeField] TilemapWater tilemapWater;
+    [SerializeField] float chakra;
     private void Start()
     {
+        tilemapWater = GetComponent<TilemapWater>();
         CorrectChakra();
     }
-
-    public void SubstractChakra(int count)
+    private void Update()
+    {
+        chakra = GetChakra();
+        ShowChakra();
+    }   
+    public void ShowChakra()
+    {
+        Debug.Log($"tienes {chakra} de chakra");
+    }
+    public void SubstractChakra(float count)
     {
         _chakra.RemoveQuantity(count);
     }
@@ -21,7 +31,7 @@ public class PlayerChakra : MonoBehaviour
         _chakra.AddQuantity(count);
         Debug.Log($"Has cargado {count} de chakra");
     }
-    public int GetChakra()
+    public float GetChakra()
     {
         return _chakra.GetAttQuantity();
     }
@@ -32,6 +42,21 @@ public class PlayerChakra : MonoBehaviour
         {
             _chakra.SetQuantity(100);
         }
-    }  
-    
+    } 
+    public IEnumerator ChakraDrain()
+    {
+        if (_chakra.GetAttQuantity() > 0)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1f); // Espera 1 segundo
+                SubstractChakra(0.1f); // Resta 0.1 de chakra
+                Debug.Log("Estas caminando sobre el agua, consume 0.1 chakra por segundo");
+            }
+        }
+        else 
+        {
+            TilemapWater.ActivateWaterTrigger = false;
+        }
+    }
 }

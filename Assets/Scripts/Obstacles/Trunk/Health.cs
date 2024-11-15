@@ -7,9 +7,9 @@ namespace Player
 {
     public class Health : MonoBehaviour
     {
-        public int life = 10;
-        public Animator animator;
-        AudioSource audioSource;
+        [SerializeField] int life = 10;
+        [SerializeField] Animator animator;
+        [SerializeField] AudioSource audioSource;
         void Start()
         {
             animator = GetComponent<Animator>();

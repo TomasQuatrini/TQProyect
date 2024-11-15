@@ -6,12 +6,12 @@ namespace Player
 {
     public class PlayerPunch : MonoBehaviour
     {
-        private int _cost = 5;
-        private Animator animator;
-        private BoxCollider2D hitbox;
-        private PlayerChakra playerChakra;
-        public AudioSource audioSource;
-        public AudioClip punchSound;
+        [SerializeField] int _cost = 5;
+        [SerializeField] Animator animator;
+        [SerializeField] BoxCollider2D hitbox;
+        [SerializeField] PlayerChakra playerChakra;
+        [SerializeField] AudioSource audioSource;
+        [SerializeField] AudioClip punchSound;
 
         private void Start()
         {

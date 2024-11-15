@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SoundEffect : MonoBehaviour
 {
-public AudioClip woodCrash;
-private AudioSource audioSource;
+[SerializeField] AudioClip woodCrash;
+[SerializeField] AudioSource audioSource;
 
     void Start()
     {

@@ -4,9 +4,9 @@ using UnityEngine;
 using Player;
 public class HitBox : MonoBehaviour
 {
-    PlayerPunch playerPunch;
-    private int damage = 5;
-    private void Start()
+    [SerializeField] PlayerPunch playerPunch;
+    [SerializeField] int damage = 5;
+    [SerializeField] void Start()
     {
         playerPunch = transform.parent.GetComponent<PlayerPunch>();
     }

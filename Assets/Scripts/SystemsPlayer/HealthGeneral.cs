@@ -6,7 +6,7 @@ namespace Player
 {
     public class HealthGeneral : MonoBehaviour
     {
-        public int life = 10;
+        [SerializeField] int life = 10;
 
         void Update()
         {

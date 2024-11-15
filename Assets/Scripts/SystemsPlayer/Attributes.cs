@@ -6,10 +6,10 @@ namespace Player
 {
     public class Attributes
     {
-        private string _attName;
-        private int _attQuantity;
-        public bool isEmpty = false;
-        public Attributes (string attName, int attQuantity)
+        [SerializeField] string _attName;
+        [SerializeField] float _attQuantity;
+        [SerializeField] bool isEmpty = false;
+        public Attributes (string attName, float attQuantity)
         {
             _attName = attName;
             _attQuantity = attQuantity;
@@ -25,7 +25,7 @@ namespace Player
                 _attQuantity = 0;
             }
         }
-        public int GetAttQuantity()
+        public float GetAttQuantity()
         {
             return _attQuantity;
         }
@@ -45,7 +45,7 @@ namespace Player
             _attQuantity += amount;
             }
         }
-        public void RemoveQuantity (int amount)
+        public void RemoveQuantity (float amount)
         {
             if (amount <= 0)
             {
@@ -67,7 +67,7 @@ namespace Player
             Debug.Log($"tiene {_attQuantity} de {_attName}");
         }
 
-        public void SetQuantity(int count)
+        public void SetQuantity(float count)
         {
             _attQuantity = count;
         }
